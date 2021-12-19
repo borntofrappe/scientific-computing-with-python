@@ -1,6 +1,6 @@
 # [arithmetic-formatter](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
 
-[The assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter) asks to create a function to format arithmetic problems with a specific set of rules.
+[The assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter) asks to create a function to format arithmetic problems following specific rules.
 
 ## Input
 
@@ -14,17 +14,17 @@ arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
 
 A string highlighting an error message in the following instances:
 
-- there are more than five projects: `Error: Too many problems.`
+- there are more than five projects
 
-- the operators describe multiplication or division: `Error: Operator must be '+' or '-'.`
+- the operators describe multiplication or division
 
-- the operands contain non-digit characters: `Error: Numbers must only contain digits.`
+- the operands contain non-digit characters
 
-- the operands have more than four digits: `Error: Numbers cannot be more than four digits.`
+- the operands have more than four digits
 
-Outside of these cases, a string arranging the problems vertically and side by side. The problems should be solved only if the second argument resolves to `True`.
+Outside of these instances, the output is a string arranging the problems vertically and side by side. The problems should be solved only if the second argument resolves to `True`.
 
-Formatting rules:
+In terms of formatting the assignment asks to follow the following rules:
 
 - a single space between operator and the longest of the two operands
 
@@ -44,24 +44,24 @@ Formatting rules:
 -----    ------    ----    -----
 ```
 
-## Notes
+## Solution
 
-The first step to tackle the problem is updating the `arithmetic_arranger` function to accept two arguments, the problems and the optional boolean.
+Define `arithmetic_arranger` as a function with two parameters: `problems` and `solved`. Give `solved` a default value of `False` to make the argument optional.
 
 ```py
 def arithmetic_arranger(problems, solved=False):
 ```
 
-From this setup, the most immediate portion relates to the error messages:
+In the body of the function, begin by considering the error messages:
 
-- too many problems
+- there are more than five projects
 
   ```py
   if len(problems) > 5:
     return 'Error: Too many problems.'
   ```
 
-- operator not describing addition or subtraction
+- the operators describe multiplication or division
 
   For this step it is first necessary to loop through the problems, break up the operation in its three components and consider the operator
 
@@ -71,22 +71,39 @@ From this setup, the most immediate portion relates to the error messages:
     operator = operation[1]
   ```
 
-  It's possible to check the condition in at least two ways:
+  Check the condition in one of at least two ways:
 
   1. the operator is different from `+` and `-`
 
   2. the operator is not `+` or `-`
 
-  I chose the latter since it seems to fit more the error message
+  I preferred the second option since it seems to fit more the error message
 
   ```py
   if not(operator == '+' or operator == '-'):
     return "Error: Operator must be '+' or '-'."
   ```
 
-- operands more than four digits long
+- the operands contain non-digit characters
 
-  The `split` function returns a list of strings, so that it is immediately possible to consider the length of the string
+  Include a `try` block to explicitly convert the strings into integers:
+
+  ```py
+  try:
+    operand_1 = int(operand_1)
+    operand_2 = int(operand_2)
+  ```
+
+  Return the error message in the `except` block.
+
+  ```py
+  except:
+    return "Error: Numbers must only contain digits."
+  ```
+
+- the operands have more than four digits
+
+  The `split` function returns a list of strings, so that it would be possible to consider the length of the string
 
   ```py
   operand_1 = operation[0]
@@ -96,21 +113,19 @@ From this setup, the most immediate portion relates to the error messages:
     return "Error: Numbers cannot be more than four digits."
   ```
 
-  The assignment doesn't specify the order in which the error messages should be produced, so I prefer this option to first parsing the operand to numerical values and consider if they exceed `9999` in absolute terms
-
-- operands contain non-digit characters
-
-  Here it is possible to rely on a `try..except` block. Try to explicitly convert the strings into integers:
+  However, to follow the specific order of the assignment the condition is checked _after_ the operands have been converted to integer. Here there are at least two solutions: check if either number exceeds `9999` in absolute terms, retrieve the length of the string for each operand and check if either exceeds `4` characters. I choose the second option since it is helpful to have a reference to the length of the operands for formatting reasons.
 
   ```py
-  try:
-    operand_1 = int(operand_1)
-    operand_2 = int(operand_2)
+  length_1 = len(str(operand_1))
+  length_2 = len(str(operand_2))
+  length_max = length_1 > length_2 and length_1 or length_2
   ```
 
-  When an error is raised return the desired string
+  For the error message check if `length_max` exceeds the desired threshold.
 
   ```py
-  except:
-    return "Error: Numbers must only contain digits."
+  if length_max > 4:
+    return "Error: Numbers cannot be more than four digits."
   ```
+
+For formatting reasons it is helpful to build a list describing the problems in their building blocks: operands, operator and even the length of the greater number. The data structure helps to then populate a string where successive problems are side by side.
