@@ -3,7 +3,7 @@ def add_time(start, duration, day=""):
     start_time = start_date[0].split(':')
     start_hour = int(start_time[0])
     start_minutes = int(start_time[1])
-    start_suffix = start_date[1]
+    start_meridian = start_date[1]
 
     duration_time = duration.split(':')
     duration_hour = int(duration_time[0])
@@ -15,16 +15,16 @@ def add_time(start, duration, day=""):
         end_hour = end_hour + int(end_minutes / 60)
         end_minutes = end_minutes % 60
 
-    end_suffix = start_suffix
+    end_meridian = start_meridian
     if end_hour >= 12:
         if int(end_hour / 12) % 2 != 0:
-            end_suffix = end_suffix == 'PM' and 'AM' or 'PM'
+            end_meridian = end_meridian == 'PM' and 'AM' or 'PM'
         end_hour = end_hour % 12
         if end_hour == 0:
             end_hour = end_hour + 12
 
     day_excess = int(duration_hour / 24)
-    if start_suffix == 'PM' and end_suffix == 'AM':
+    if start_meridian == 'PM' and end_meridian == 'AM':
         day_excess = day_excess + 1
 
     day_suffix = ''
@@ -40,7 +40,7 @@ def add_time(start, duration, day=""):
 
         end_day = days[(day_index + day_excess) % len(days)]
 
-        day_suffix = ', ' + end_day[:1].upper() + end_day[1:]
+        day_suffix = ', ' + end_day[0].upper() + end_day[1:]
 
     excess_suffix = ''
     if day_excess > 0:
@@ -50,7 +50,7 @@ def add_time(start, duration, day=""):
             excess_suffix = ' (' + str(day_excess) + ' days later)'
 
     end = str(end_hour) + ':' + str(end_minutes).rjust(2, '0') + \
-        ' ' + end_suffix + day_suffix + excess_suffix
+        ' ' + end_meridian + day_suffix + excess_suffix
     return end
 
 
