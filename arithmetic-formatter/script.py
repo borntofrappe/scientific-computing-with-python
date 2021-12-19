@@ -1,5 +1,5 @@
 def arithmetic_arranger(problems, solved=False):
-    operations = []
+    operations = list()
 
     if len(problems) > 5:
         return "Error: Too many problems."
@@ -53,9 +53,9 @@ def arithmetic_arranger(problems, solved=False):
 
         lines[2] = lines[2] + '-' * width + spaces
 
-        if 'solution' in operation:
+        if solved:
             lines[3] = lines[3] + \
-                str(operation['solution']).rjust(width) + spaces
+                str(operation.get('solution', '')).rjust(width) + spaces
 
     arranged_problems = ''
     for line in lines:

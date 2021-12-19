@@ -1,18 +1,22 @@
-# [arithmetic-formatter](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
+# arithmetic-formatter
+
+## Links
+
+[Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter).
+
+[Solution](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
+
+## Preface
 
 [The assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter) asks to create a function to format arithmetic problems following specific rules.
 
-## Input
-
-A list of strings and an optional boolean.
+In terms of **input** the function receives a list of strings and an optional boolean.
 
 ```py
 arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
 ```
 
-## Output
-
-A string highlighting an error message in the following instances:
+In terms of **output** the function returns a string highlighting an error message in the following instances:
 
 - there are more than five projects
 
@@ -22,7 +26,7 @@ A string highlighting an error message in the following instances:
 
 - the operands have more than four digits
 
-Outside of these instances, the output is a string arranging the problems vertically and side by side. The problems should be solved only if the second argument resolves to `True`.
+Outside of these instances, the **output** is a string arranging the problems vertically and side by side. The problems should be solved only if the second argument resolves to `True`.
 
 In terms of formatting the assignment asks to follow the following rules:
 
@@ -67,8 +71,8 @@ In the body of the function, begin by considering the error messages:
 
   ```py
   for problem in problems:
-    operation = problem.split()
-    operator = operation[1]
+    expression = problem.split()
+    operator = expression[1]
   ```
 
   Check the condition in one of at least two ways:
@@ -106,8 +110,8 @@ In the body of the function, begin by considering the error messages:
   The `split` function returns a list of strings, so that it would be possible to consider the length of the string
 
   ```py
-  operand_1 = operation[0]
-  operand_2 = operation[2]
+  operand_1 = expression[0]
+  operand_2 = expression[2]
 
   if len(operand_1) > 4 or len(operand_2) > 4:
     return "Error: Numbers cannot be more than four digits."
@@ -128,4 +132,123 @@ In the body of the function, begin by considering the error messages:
     return "Error: Numbers cannot be more than four digits."
   ```
 
-For formatting reasons it is helpful to build a list describing the problems in their building blocks: operands, operator and even the length of the greater number. The data structure helps to then populate a string where successive problems are side by side.
+Past the error messages, the output string needs to place the problems side by side. For this reason it is helpful to build a list describing the problems in their building blocks: operands, operator and even the length of the greater number. The data structure helps to then populate a string where successive problems are side by side.
+
+Initialize a list in which to store the operations.
+
+```py
+operations = list()
+```
+
+In the for loop create a dictionary for the individual operation, populating the data structure with the relevant information.
+
+```py
+operation = dict()
+operation['operand_1'] = operand_1
+operation['operand_2'] = operand_2
+operation['operator'] = operator
+operation['width'] = width
+```
+
+`width` describes the maximum value of the length incremented by 2, to accommodate the space between operator and operand and the operator itself.
+
+Considering the boolean `solved` the dictionary also includes the solution, adding or subtracting depending on the operator.
+
+```py
+solution = operator == '+' and operand_1 + operand_2 or operand_1 - operand_2
+operation['solution'] = solution
+```
+
+Outside of the for loop `operations` contains one dictionary for each operation. To create the side by side effect, initialize `lines` as a list of three, or four, strings. Four strings to make space for the optional solution.
+
+```py
+lines = ['', '', '']
+if solved:
+    lines.append('')
+```
+
+The idea is to then loop through the operations and populate the different lines with the desired information:
+
+- on the first line add the first operand
+
+  ```py
+  lines[0] = lines[0] + str(operation['operand_1'])
+  ```
+
+  To align the string use `.rjust()` function with the operation's width.
+
+  ```py
+  lines[0] = lines[0] + str(operation['operand_1']).rjust(width)
+  ```
+
+- on the second line add the operator, a space, and the second operand
+
+  Since the space and operator occupy two characters it is necessary to decrement the width accordingly
+
+  ```py
+  lines[1] = lines[1] + operation['operator'] + ' ' + str(operation['operand_2']).rjust(width - 2)
+  ```
+
+- on the third line add as many dash characters as described by the width
+
+  ```py
+  lines[2] = lines[2] + '-' * width
+  ```
+
+- on the optional fourth line add the solution, once more aligned with `rjust`
+
+  ```py
+  lines[3] = lines[3] + str(operation['solution']).rjust(width)
+  ```
+
+To separate successive problems append also as many spaces as required by the assignment. For instance and for the dashed line.
+
+```py
+lines[2] = lines[2] + '-' * width + ' ' * 4
+```
+
+Since every line appends the spaces I preferred to store the value in a separate variable, but the logic remains the same.
+
+```py
+spaces = ' ' * 4
+lines[2] = lines[2] + '-' * width + spaces
+```
+
+Past the loop `lines` includes the problems in multiple strings. There is an excess of whitespace as even the last iteration includes the spaces, but it's possible to strip the value with `rstrip`.
+
+Initialize `arranged_problems` as an empty string, loop through the lines and append each line followed by a new line character.
+
+```py
+arranged_problems = arranged_problems + line.rstrip() + '\n'
+```
+
+Finally, return the string stripping the last new line character.
+
+```py
+return arranged_problems.rstrip()
+```
+
+## Update
+
+Previously I included the solution on the third line checking if the solution existed in the dictionary.
+
+```py
+if 'solution' in operation:
+  # append to lines[3]
+```
+
+However, I prefer to rely on the same conditional used for computing the solution and adding the line.
+
+```py
+if solved:
+  # append to lines[3]
+```
+
+Other than creating a connection of meaning the approach allows to provide a fallback when no key exist, even if not possible by design.
+
+```py
+# operation['solution']
+str(operation.get('solution', ''))
+```
+
+In this manner a missing solution would not compromise successive problems.
