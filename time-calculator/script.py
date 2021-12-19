@@ -40,17 +40,17 @@ def add_time(start, duration, day=""):
 
         end_day = days[(day_index + day_excess) % len(days)]
 
-        day_suffix = ', ' + end_day[0].upper() + end_day[1:]
+        day_suffix = f', {end_day[0].upper()}{end_day[1:]}'
 
     excess_suffix = ''
     if day_excess > 0:
         if day_excess == 1:
             excess_suffix = ' (next day)'
         else:
-            excess_suffix = ' (' + str(day_excess) + ' days later)'
+            excess_suffix = f' ({str(day_excess)} days later)'
 
-    end = str(end_hour) + ':' + str(end_minutes).rjust(2, '0') + \
-        ' ' + end_meridian + day_suffix + excess_suffix
+    end = f'{str(end_hour)}:{str(end_minutes).rjust(2, "0")} {end_meridian}{day_suffix}{excess_suffix}'
+
     return end
 
 

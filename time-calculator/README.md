@@ -1,4 +1,10 @@
-# [time-calculator](https://replit.com/@borntofrappe/boilerplate-time-calculator)
+# time-calculator
+
+## Links
+
+[Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/time-calculator)
+
+[Solution](https://replit.com/@borntofrappe/boilerplate-time-calculator)
 
 ## Preface
 
@@ -147,3 +153,14 @@ If the excess is greater than a day add the desired labels:
 - x days later for greater values
 
 The final string concatenates all the values for the end hour, minutes, meridian and suffixes.
+
+## Update
+
+From the Python docs I discovered [formatted string literals](https://docs.python.org/3/tutorial/inputoutput.html#tut-f-strings), a feature makes concatenating strings more clear.
+
+```diff
+-day_fufix = ', ' + end_day[0].upper() + end_day[1:]
++day_suffix = f', {end_day[0].upper()}{end_day[1:]}'
+```
+
+I find it definitely easier to read, at least. The difference becomes more noticeable when adding whitespace characters, or again the colon separating the hour and minutes.
