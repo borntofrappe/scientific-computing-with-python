@@ -112,7 +112,7 @@ def withdraw(self, amount, description=""):
 
 A similar logic can be applied to `check_funds`, in order to retrieve the balance from the `get_balance` method, and to `transfer`, in order to withdraw and deposit with the respective functions.
 
-### Formatting
+### print
 
 The assignment asks to display a specific string through the `print` function. This is in place of the default object provided by Python.
 
@@ -146,13 +146,23 @@ For the specific string the assignment asks for:
   f'{operation["description"][:23].ljust(23)}'
   ```
 
-  The remaining 7 characters are dedicated to the amount, with two decimal places and right aligned
+  The remaining 7 characters are dedicated to the amount, with two decimal places and right aligned.
+
+  The alignment mirrors that of the description.
 
   ```py
-  f'{str(operation.amount)[:7].rjust(7)}'
+  f'{str(operation["amount"])[:7].rjust(7)}'
   ```
 
-  The line is appended to the output string with an additional new line character.
+  For the decimal places [the docs](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals) provide a solution in using a specific directive.
+
+  ```py
+  amount = f'{str(operation["amount"]):.2f}'
+  ```
+
+  I prefer to first create the decimal version and then align the value in the output string, but the logic remains the same.
+
+  The entire line is appended to the output string with an additional new line character.
 
   ```py
   output = f'{output}...\n'
@@ -197,15 +207,9 @@ Total: 923.96
 
 ### Function
 
-Besides the `Category` class, create a function (outside of the class) called `create_spend_chart` that takes a list of categories as an argument. It should return a string that is a bar chart.
+The second part of the assignment asks to create a function which takes a list of categories as an argument and returns a string representing a rudimentary bar chart.
 
-The chart should show the percentage spent in each category passed in to the function. The percentage spent should be calculated only with withdrawals and not with deposits. Down the left side of the chart should be labels 0 - 100. The "bars" in the bar chart should be made out of the "o" character. The height of each bar should be rounded down to the nearest 10. The horizontal line below the bars should go two spaces past the final bar. Each category name should be written vertically below the bar. There should be a title at the top that says "Percentage spent by category".
-
-This function will be tested with up to four categories.
-
-Look at the example output below very closely and make sure the spacing of the output matches the example exactly.
-
-```
+```text
 Percentage spent by category
 100|
  90|
@@ -228,3 +232,17 @@ Percentage spent by category
         n
         g
 ```
+
+The string should:
+
+- begin with the title 'Percentage spent by category'
+
+- display percentage points on the left side: 100, 90 and so forth in decrements of 10
+
+- spaeate the percentage points from the data with pipe characters `|`
+
+- display the percentage spent in each category with the letter `o`, centered in three columns
+
+- separate the percentage spent from the name of the categories with dash characters `-`. There should be one more dash than there are for the columns
+
+- display the name of the category vertically below the center column
