@@ -2,9 +2,9 @@
 
 ## Links
 
-[Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/time-calculator)
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/time-calculator)
 
-[Solution](https://replit.com/@borntofrappe/boilerplate-time-calculator)
+- [Solution](https://replit.com/@borntofrappe/boilerplate-time-calculator)
 
 ## Preface
 

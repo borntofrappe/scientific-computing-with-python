@@ -2,12 +2,28 @@
 
 Notes and solutions to earn the [_Scientific Computing with Python_](https://www.freecodecamp.org/learn/scientific-computing-with-python/) certification on the FreeCodeCamp curriculum.
 
-## [Arithmetic Formatter](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter)
+## Arithmetic Formatter
 
-## [Time Calculator](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/time-calculator)
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter)
 
-## [Budget App](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/budget-app)
+- [Solution](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
 
-## [Polygon Area Calculator](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/polygon-area-calculator)
+## Time Calculator
 
-## [Probability Calculator](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/probability-calculator)
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/time-calculator)
+
+- [Solution](https://replit.com/@borntofrappe/boilerplate-time-calculator)
+
+## Budget App
+
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/budget-app)
+
+- [Solution](https://replit.com/@borntofrappe/boilerplate-budget-app)
+
+## Polygon Area Calculator
+
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/polygon-area-calculator)
+
+## Probability Calculator
+
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/probability-calculator)

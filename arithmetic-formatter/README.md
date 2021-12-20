@@ -2,9 +2,9 @@
 
 ## Links
 
-[Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter).
+- [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter)
 
-[Solution](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
+- [Solution](https://replit.com/@borntofrappe/boilerplate-arithmetic-formatter)
 
 ## Preface
 
