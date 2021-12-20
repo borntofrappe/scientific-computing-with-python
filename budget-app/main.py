@@ -56,12 +56,10 @@ class Category:
 def create_spend_chart(categories):
     amounts = []
     total_amount = 0
+    percentages = []
 
     names = []
     max_length_name = 0
-
-    dashes = '-' * (len(categories) * 3 + 1)
-    width = len(dashes) + 4
 
     for category in categories:
         amount = 0
@@ -78,12 +76,17 @@ def create_spend_chart(categories):
         if length_name > max_length_name:
             max_length_name = length_name
 
-    percentages = []
     for amount in amounts:
         percentage = int(amount / total_amount * 100)
         percentages.append(percentage)
 
     output = 'Percentage spent by category\n'
+
+    percentage_width = 3
+    pipe_width = 1
+    category_width = 3
+    categories_width = category_width * len(categories)
+    padding_width = 1
 
     for point in range(11):
         row = ''
@@ -91,11 +94,12 @@ def create_spend_chart(categories):
 
         for percentage in percentages:
             character = percentage >= percentage_point and 'o' or ''
-            row = f'{row}{character.center(3)}'
+            row = f'{row}{character.center(category_width)}'
 
-        output = f'{output}{str(percentage_point).rjust(3)}|{row} \n'
+        output = f'{output}{str(percentage_point).rjust(percentage_width)}{"|".ljust(pipe_width)}{row}{" ".ljust(padding_width)}\n'
 
-    output = f'{output}{dashes.rjust(width)}\n'
+    dashes = '-' * (categories_width + padding_width)
+    output = f'{output}{dashes.rjust(percentage_width + pipe_width + categories_width + padding_width)}\n'
 
     for i in range(max_length_name):
         row = ''
@@ -104,31 +108,27 @@ def create_spend_chart(categories):
             if len(name) > i:
                 character = name[i]
 
-            row = f'{row}{character.center(3)}'
+            row = f'{row}{character.center(category_width)}'
 
-        output = f'{output}{row.rjust(width -1)} \n'
+        output = f'{output}{row.rjust(percentage_width + pipe_width + categories_width)}{" ".ljust(padding_width)}\n'
 
-    return output.rstrip()
+    return output[:-1]
 
 
-food = Category('Food')
-clothing = Category('Clothing')
-food.deposit(1000, 'Initial deposit')
-food.withdraw(10.15, 'groceries')
-food.withdraw(15.89, 'restaurant and more food items')
+food = Category("Food")
+food.deposit(1000, "initial deposit")
+food.withdraw(10.15, "groceries")
+food.withdraw(15.89, "restaurant and more food for dessert")
+print(food.get_balance())
+clothing = Category("Clothing")
 food.transfer(50, clothing)
+clothing.withdraw(25.55)
+clothing.withdraw(100)
+auto = Category("Auto")
+auto.deposit(1000, "initial deposit")
+auto.withdraw(15)
+
 print(food)
+print(clothing)
 
-print()
-
-energy = Category('Energy')
-entertainment = Category('Entertainment')
-business = Category('Business')
-energy.deposit(900, "deposit")
-entertainment.deposit(900, "deposit")
-business.deposit(900, "deposit")
-energy.withdraw(105.55)
-entertainment.withdraw(33.40)
-business.withdraw(10.99)
-
-print(create_spend_chart([energy, business, entertainment]))
+print(create_spend_chart([food, clothing, auto]))
