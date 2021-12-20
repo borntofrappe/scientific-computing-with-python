@@ -12,15 +12,9 @@ The assignment focuses on object oriented programming with two classes: `Rectang
 
 ## Solution
 
-The Square class should be a subclass of Rectangle.
+### Rectangle
 
-```py
-class Rectangle:
-
-class Square(Rectangle):
-```
-
-The rectangle class should be initialized with `width` and `height`.
+The class should be initialized with `width` and `height`.
 
 ```py
 class Rectangle:
@@ -68,53 +62,28 @@ For `get_amount_inside` the idea is to receive a rectangle or a square as argume
 
 <<<
 
-#### Square class
+#### Square
 
-The Square class should be a subclass of Rectangle. When a Square object is created, a single side length is passed in. The `__init__` method should store the side length in both the `width` and `height` attributes from the Rectangle class.
-
-The Square class should be able to access the Rectangle class methods but should also contain a `set_side` method. If an instance of a Square is represented as a string, it should look like: `Square(side=9)`
-
-Additionally, the `set_width` and `set_height` methods on the Square class should set both the width and height.
-
-#### Usage example
+The Square class should be a subclass of Rectangle.
 
 ```py
-rect = shape_calculator.Rectangle(10, 5)
-print(rect.get_area())
-rect.set_height(3)
-print(rect.get_perimeter())
-print(rect)
-print(rect.get_picture())
-
-sq = shape_calculator.Square(9)
-print(sq.get_area())
-sq.set_side(4)
-print(sq.get_diagonal())
-print(sq)
-print(sq.get_picture())
-
-rect.set_height(8)
-rect.set_width(16)
-print(rect.get_amount_inside(sq))
+class Square(Rectangle):
 ```
 
-That code should return:
+In the initialization function the class should receive a single value, the length of the side, and use the value for both the width and height. [The docs](https://docs.python.org/3/library/functions.html#super) instruct to use `super()` to call the parent class.
 
+```py
+def __init__(self, side):
+  super().__init__(side, side)
 ```
-50
-26
-Rectangle(width=10, height=3)
-**********
-**********
-**********
 
-81
-5.656854249492381
-Square(side=4)
-****
-****
-****
-****
+When printed, the class should override the message set for the rectangle and aptly describe the square and its side.
 
-8
+```py
+def __str__(self):
+  return f'Square(side={self.width})'
 ```
+
+In terms of methods, beyond the ones inherited from the rectangle class, the square should have `set_side`, modifying both the width and height.
+
+`set_width` and `set_height` methods should override both the width and height.
