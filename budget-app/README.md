@@ -12,6 +12,8 @@ The assignment asks to complete a `Category` class and a `create_spend_chart` fu
 
 ## Solution
 
+### Class
+
 Following the project's `README.md` the class should have:
 
 - an instance variable called `ledger`
@@ -105,22 +107,86 @@ With the last method the assignment suggests the use of `check_funds` in the wit
 
 ```py
 def withdraw(self, amount, description=""):
-  has_enough_funds = self.check_funds()
+  has_enough_funds = self.check_funds(amount)
 ```
 
 A similar logic can be applied to `check_funds`, in order to retrieve the balance from the `get_balance` method, and to `transfer`, in order to withdraw and deposit with the respective functions.
 
----
+### Formatting
 
-When the budget object is printed it should display:
+The assignment asks to display a specific string through the `print` function. This is in place of the default object provided by Python.
 
-- A title line of 30 characters where the name of the category is centered in a line of `*` characters.
-- A list of the items in the ledger. Each line should show the description and amount. The first 23 characters of the description should be displayed, then the amount. The amount should be right aligned, contain two decimal places, and display a maximum of 7 characters.
-- A line displaying the category total.
-
-Here is an example of the output:
-
+```py
+food = Category('Food')
+print(food)
+# <__main__.Category object>
 ```
+
+Following [the python docs](https://docs.python.org/3/reference/datamodel.html#object.__str__) the output is customized with the `__str__` method.
+
+```py
+class Category:
+  def __str__(self):
+    return self.name
+```
+
+For the specific string the assignment asks for:
+
+- a title line of 30 characters where the name of the category is centered in a line of `*` characters
+
+  ```py
+  output = self.name.center(30, '*')
+  ```
+
+- a list of the items in the ledger
+
+  Each operation displays the description for the first 23 characters
+
+  ```py
+  f'{operation["description"][:23].ljust(23)}'
+  ```
+
+  The remaining 7 characters are dedicated to the amount, with two decimal places and right aligned
+
+  ```py
+  f'{str(operation.amount)[:7].rjust(7)}'
+  ```
+
+  The line is appended to the output string with an additional new line character.
+
+  ```py
+  output = f'{output}...\n'
+  ```
+
+  The output itself is however updated _before_ the loop to add a new line character between title and operations
+
+  ```py
+  output = f'{self.name.center(30, "*")}\n'
+  ```
+
+- a line displaying the category total
+
+  ```py
+  output = f'{output}Total: {self.get_balance()}'
+  ```
+
+  There's no need to add a new line character to separate the total, since it's already included in the last iteration of the for loop
+
+The following operations:
+
+```py
+food = Category('Food')
+clothing = Category('Clothing')
+food.deposit(1000, 'Initial deposit')
+food.withdraw(10.15, 'groceries')
+food.withdraw(15.89, 'restaurant and more food items')
+food.transfer(50, clothing)
+print(food)
+```
+
+Should procude the following:
+
+```text
 *************Food*************
 initial deposit        1000.00
 groceries               -10.15
@@ -128,6 +194,8 @@ restaurant and more foo -15.89
 Transfer to Clothing    -50.00
 Total: 923.96
 ```
+
+### Function
 
 Besides the `Category` class, create a function (outside of the class) called `create_spend_chart` that takes a list of categories as an argument. It should return a string that is a bar chart.
 

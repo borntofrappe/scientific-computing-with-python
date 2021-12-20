@@ -3,6 +3,16 @@ class Category:
         self.name = name
         self.ledger = []
 
+    def __str__(self):
+        output = f'{self.name.center(30, "*")}\n'
+        for operation in self.ledger:
+            description = operation['description'][:23].ljust(23)
+            amount = f'{operation["amount"]:.2f}'[:7].rjust(7)
+            output = f'{output}{description}{amount}\n'
+
+        output = f'{output}Total: {self.get_balance()}'
+        return output
+
     def get_balance(self):
         balance = 0
         for operation in self.ledger:
@@ -43,11 +53,10 @@ class Category:
         return has_enough_funds
 
 
-food = Category('food')
-clothing = Category('clothing')
-
-food.deposit(500)
-print(food.get_balance())
-food.transfer(400, clothing)
-print(food.get_balance())
-print(clothing.get_balance())
+food = Category('Food')
+clothing = Category('Clothing')
+food.deposit(1000, 'Initial deposit')
+food.withdraw(10.15, 'groceries')
+food.withdraw(15.89, 'restaurant and more food items')
+food.transfer(50, clothing)
+print(food)
