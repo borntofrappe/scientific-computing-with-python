@@ -25,13 +25,13 @@ class Category:
 
         return balance >= amount
 
-    def deposit(self, amount, description=""):
+    def deposit(self, amount, description=''):
         self.ledger.append({
             'amount': amount,
             'description': description,
         })
 
-    def withdraw(self, amount, description=""):
+    def withdraw(self, amount, description=''):
         has_enough_funds = self.check_funds(amount)
 
         if has_enough_funds:
@@ -46,9 +46,9 @@ class Category:
         has_enough_funds = self.check_funds(amount)
 
         if has_enough_funds:
-            self.withdraw(amount, f"Transfer to {category.name}")
+            self.withdraw(amount, f'Transfer to {category.name}')
 
-            category.deposit(amount, f"Transfer from {self.name}")
+            category.deposit(amount, f'Transfer from {self.name}')
 
         return has_enough_funds
 
@@ -56,7 +56,6 @@ class Category:
 def create_spend_chart(categories):
     amounts = []
     total_amount = 0
-    percentages = []
 
     names = []
     max_length_name = 0
@@ -75,6 +74,8 @@ def create_spend_chart(categories):
         length_name = len(name)
         if length_name > max_length_name:
             max_length_name = length_name
+
+    percentages = []
 
     for amount in amounts:
         percentage = int(amount / total_amount * 100)
