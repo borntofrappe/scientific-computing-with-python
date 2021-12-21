@@ -10,27 +10,107 @@
 
 The assignment asks to estimate the probability of drawing a sequence of balls from a hat by running a series of experiments.
 
-<!-- ## Solution -->
+## Solution
 
-## freeCodeCamp
+> Create a `Hat` class in `prob_calculator.py`
 
-### Assignment
+> Each instance of the class is instantiated with a variable number of arguments that specify the number of balls of each color.
 
-Suppose there is a hat containing 5 blue balls, 4 red balls, and 2 green balls. What is the probability that a random draw of 4 balls will contain at least 1 red ball and 2 green balls? While it would be possible to calculate the probability using advanced mathematics, an easier way is to write a program to perform a large number of experiments to estimate an approximate probability.
+For instance:
 
-For this project, you will write a program to determine the approximate probability of drawing certain balls randomly from a hat.
-
-First, create a `Hat` class in `prob_calculator.py`. The class should take a variable number of arguments that specify the number of balls of each color that are in the hat. For example, a class object could be created in any of these ways:
-
-```
+```py
 hat1 = Hat(yellow=3, blue=2, green=6)
 hat2 = Hat(red=5, orange=4)
 hat3 = Hat(red=5, orange=4, black=1, blue=0, pink=2, striped=9)
 ```
 
-A hat will always be created with at least one ball. The arguments passed into the hat object upon creation should be converted to a `contents` instance variable. `contents` should be a list of strings containing one item for each ball in the hat. Each item in the list should be a color name representing a single ball of that color. For example, if your hat is `{"red": 2, "blue": 1}`, `contents` should be `["red", "red", "blue"]`.
+The arguments in the form `key=value` are known as _keyword arguments_, one of the two types documented in the glossary explaining [arguments](https://docs.python.org/3/glossary.html#term-argument). Always in the glossary the section devoted [to parameters](https://docs.python.org/3/glossary.html#term-parameter) explains how to receive the value of a variable number of inputs.
 
-The `Hat` class should have a `draw` method that accepts an argument indicating the number of balls to draw from the hat. This method should remove balls at random from `contents` and return those balls as a list of strings. The balls should not go back into the hat during the draw, similar to an urn experiment without replacement. If the number of balls to draw exceeds the available quantity, return all the balls.
+```py
+def call(**kwargs):
+  print(kwargs)
+
+call(red=5, blue=1)
+call(yellow=3, blue=2, green=6)
+```
+
+The arguments are collected in a dictionary.
+
+```py
+def call(**kwargs):
+  for key, value in kwargs.items():
+    print(key, value)
+
+call(red=5, blue=1)
+# red 5
+# blue 1
+```
+
+> A hat will always be created with at least one ball.
+
+> In the `__init__` function create a `contents` instance variable as a list containing one item for each ball. Each item in the list should represent a single ball of the given color.
+>
+> For instance, the hat `{"red": 2, "blue": 1}` creates a `contents` lists `["red", "red", "blue"]`
+
+To implement the feature first cycle through the colors:
+
+```py
+for color, number in kwargs.items():
+```
+
+Then create an additional loop to append as many colors as described by the number:
+
+```py
+for _ in range(number):
+  contents.append(color)
+```
+
+> The `Hat` class should have a `draw` method which accepts an argument indicating the number of balls to draw
+
+```py
+ def draw(self, n):
+   balls = []
+```
+
+> The method should remove balls at random from `contents` and return those balls as a list of strings
+>
+> The balls should not go back into the hat during the draw
+
+To pick a ball at random it's possible to rely on one of the two imported modules: `random`
+
+```py
+import random
+```
+
+With the module, and for as many times as dictated by the input number, pick an index up to the length of the `contents` list.
+
+```py
+for _ in range(n):
+  index = random.randint(0, len(self.contents) - 1)
+```
+
+To remove the ball from the list the `.pop` function removes the item at the chosen index.
+
+```py
+balls.append(self.contents.pop(index))
+```
+
+Past the for loop, `balls` contains the desired list of strings.
+
+```py
+return balls
+```
+
+> If the number of balls exceeds the available quantity return all the balls
+
+Check the length of the `contents` list before the drawing operation.
+
+```py
+if n >= len(self.contents):
+  return self.contents
+```
+
+---
 
 Next, create an `experiment` function in `prob_calculator.py` (not inside the `Hat` class). This function should accept the following arguments:
 
