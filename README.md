@@ -29,3 +29,5 @@ Notes and solutions to earn the [_Scientific Computing with Python_](https://www
 ## Probability Calculator
 
 - [Assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/probability-calculator)
+
+- [Solution](https://replit.com/@borntofrappe/boilerplate-probability-calculator)
