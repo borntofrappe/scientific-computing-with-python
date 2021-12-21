@@ -8,7 +8,7 @@
 
 ## Preface
 
-[The assignment](https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/arithmetic-formatter) asks to create a function to format arithmetic problems following specific rules.
+The assignment asks to create a function to format arithmetic problems following specific rules.
 
 In terms of **input** the function receives a list of strings and an optional boolean.
 
